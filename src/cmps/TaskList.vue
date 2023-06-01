@@ -8,7 +8,7 @@
             <p>tags</p>
         </header>
         <TaskPreview @update="updateTask" v-for="task in group.tasks" :task="task" />
-        <AddTask :group="group" />
+        <AddTask @add="addTask" />
     </section>
 </template>
 
@@ -24,6 +24,14 @@ export default {
         }
     },
     methods: {
+        async addTask(task) {
+            try {
+                await this.$store.dispatch({ type: 'addTask', group: this.group, task })
+            } catch (err) {
+                console.log(err)
+                throw new Error('method addTask failed')
+            }
+        },
         updateTask(task) {
             this.$store.dispatch({ type: 'updateTask', group: this.group, task })
         }

@@ -7,9 +7,6 @@
 <script>
 import { boardService } from '../services/board.service.js'
 export default {
-    props: {
-        group: { type: Object, required: true }
-    },
     data() {
         return {
             task: boardService.getEmptyTask(),
@@ -17,12 +14,7 @@ export default {
     },
     methods: {
         async addTask() {
-            try {
-                await this.$store.dispatch({ type: 'addTask', group: this.group, task: this.task })
-            } catch (err) {
-                console.log(err)
-                throw new Error('method addTask failed')
-            }
+            this.$emit('add', this.task)
             this.task = boardService.getEmptyTask()
         }
     }

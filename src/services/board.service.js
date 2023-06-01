@@ -122,7 +122,7 @@ async function addTask(boardId, groupId, task) {
     try {
         const board = await getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
-        group.tasks.unshift(task)
+        group.tasks.push(task) // TODO: unshift doesn't work... why?
         return save(board)
     } catch(err){
         console.log(err);
