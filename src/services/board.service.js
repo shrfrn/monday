@@ -144,8 +144,18 @@ async function updateTask(boardId, groupId, updatedTask) {
     }
 }
 
-async function removeTask() {
+async function removeTask(boardId, groupId, taskId) {
+    try {
+        const board = await getById(boardId)
+        const group = board.groups.find(group => group.id === groupId)
+        const idx = group.tasks.findIndex(task => task.id === taskId)
 
+        group.tasks.splice(idx, 1)
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.addTask() failed...')
+    }
 }
 
 function getEmptyTask() {

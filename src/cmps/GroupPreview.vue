@@ -10,10 +10,7 @@ import TaskList from '@/cmps/TaskList.vue'
 
 export default {
     props: {
-        group: {
-            type: Object,
-            required: true,
-        }
+        group: { type: Object, required: true }
     },
     components: {
         TaskList,

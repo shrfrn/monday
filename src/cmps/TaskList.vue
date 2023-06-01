@@ -7,7 +7,12 @@
             <p>people</p>
             <p>tags</p>
         </header>
-        <TaskPreview @update="updateTask" v-for="task in group.tasks" :task="task" />
+        <TaskPreview 
+            :task="task" 
+            @update="updateTask" 
+            @remove="removeTask" 
+            v-for="task in group.tasks" :key="task.id" />
+            
         <AddTask @add="addTask" />
     </section>
 </template>
@@ -18,10 +23,7 @@ import AddTask from '@/cmps/AddTask.vue'
 
 export default {
     props: {
-        group: {
-            type: Object,
-            required: true,
-        }
+        group: { type: Object, required: true }
     },
     methods: {
         async addTask(task) {
@@ -34,6 +36,9 @@ export default {
         },
         updateTask(task) {
             this.$store.dispatch({ type: 'updateTask', group: this.group, task })
+        },
+        removeTask(task){
+            this.$store.dispatch({ type: 'removeTask', group: this.group, task })
         }
     },
     components: {

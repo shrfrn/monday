@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="updateTask" class="task-preview">
-        <input v-model="taskToEdit.title" />
-        <p>{{ task.owner.fullname }}</p>
+        <input @keydown.esc="$refs.title.blur()" ref="title" v-model="taskToEdit.title" />
+        <p @dblclick.prevent="removeTask">{{ task.owner.fullname }}</p>
         <p>{{ task.status }}</p>
         <p>{{ task.people[0]?.fullname }}</p>
         <p>{{ task.tags }}</p>
@@ -11,10 +11,7 @@
 <script>
 export default {
     props: {
-        task: {
-            type: Object,
-            required: true,
-        }
+        task: { type: Object, required: true }
     },
     data() {
         return {
@@ -24,6 +21,10 @@ export default {
     methods: {
         updateTask() {
             this.$emit('update', this.taskToEdit)
+            this.$refs.title.blur()
+        },
+        removeTask() {
+            this.$emit('remove', this.task)
         }
     }
 }

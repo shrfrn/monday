@@ -10,10 +10,7 @@ import GroupList from '@/cmps/GroupList.vue'
 
 export default {
     props: {
-        board: {
-            type: Object,
-            required: true,
-        }
+        board: { type: Object, required: true }
     },
     components: {
         GroupList,

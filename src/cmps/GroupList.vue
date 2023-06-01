@@ -11,10 +11,7 @@ import GroupPreview from '@/cmps/GroupPreview.vue'
 
 export default {
     props: {
-        groups: {
-            type: Array,
-            required: true,
-        }
+        groups: { type: Array, required: true }
     },
     components: {
         GroupPreview,

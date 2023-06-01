@@ -39,7 +39,16 @@ const store = createStore({
                 commit({ type: 'setActiveBoard', board })
             } catch (err) {
                 console.log(err);
-                throw new Error('action addTask failed')
+                throw new Error('action updateTask failed')
+            }
+        },
+        async removeTask({ state, commit }, { group, task }) {
+            try {
+                const board = await boardService.removeTask(state.board._id, group.id, task.id)
+                commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action removeTask failed')
             }
         },
     },
