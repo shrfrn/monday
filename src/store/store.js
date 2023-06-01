@@ -27,15 +27,24 @@ const store = createStore({
         async addTask({ state, commit }, { group, task }) {
             try {
                 const board = await boardService.addTask(state.board._id, group.id, task)
-                // commit({ type: 'setActiveBoard', board })
+                commit({ type: 'setActiveBoard', board })
             } catch (err) {
                 console.log(err);
                 throw new Error('action addTask failed')
             }
-        }
+        },
+        async updateTask({ state, commit }, { group, task }) {
+            try {
+                const board = await boardService.updateTask(state.board._id, group.id, task)
+                commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action addTask failed')
+            }
+        },
     },
     getters: {
-        board(state){ return state.board }
+        board(state) { return state.board }
     }
 })
 

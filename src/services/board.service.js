@@ -120,7 +120,6 @@ function getEmptyGroup() {
 
 async function addTask(boardId, groupId, task) {
     try {
-        console.log('task: ', task)
         const board = await getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
         group.tasks.unshift(task)
@@ -131,8 +130,18 @@ async function addTask(boardId, groupId, task) {
     }
 }
 
-async function updateTask() {
-
+async function updateTask(boardId, groupId, updatedTask) {
+    try {
+        const board = await getById(boardId)
+        const group = board.groups.find(group => group.id === groupId)
+        const idx = group.tasks.findIndex(task => task.id === updatedTask.id)
+        
+        group.tasks.splice(idx, 1, updatedTask)
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.addTask() failed...')
+    }
 }
 
 async function removeTask() {
@@ -142,7 +151,7 @@ async function removeTask() {
 function getEmptyTask() {
     return                     {
         "id": utilService.makeId(),
-        "title": "Item 1",
+        "title": "",
         "description": "description 1",
         owner: userService.getLoggedinUser(),
         "status": '',

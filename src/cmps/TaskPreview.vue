@@ -1,11 +1,11 @@
 <template>
-    <article class="task-preview">
-        <p>{{ task.title }}</p>
+    <form @submit.prevent="updateTask" class="task-preview">
+        <input v-model="taskToEdit.title" />
         <p>{{ task.owner.fullname }}</p>
         <p>{{ task.status }}</p>
         <p>{{ task.people[0]?.fullname }}</p>
         <p>{{ task.tags }}</p>
-    </article>
+    </form>
 </template>
 
 <script>
@@ -15,6 +15,16 @@ export default {
             type: Object,
             required: true,
         }
+    },
+    data() {
+        return {
+            taskToEdit: { ...this.task },
+        }
+    },
+    methods: {
+        updateTask() {
+            this.$emit('update', this.taskToEdit)
+        }
     }
 }
 </script>
@@ -22,9 +32,14 @@ export default {
 <style lang="scss">
 .task-preview{
     position: relative;
+    display: contents;
+    
     border: 1px solid lightgrey;
 
-    p {
+    input {
+        border: none;
+    }
+    p, input {
         // width: max-content;
         padding: 5px 5px 6px;
         border-block-start: 1px solid lightgray;

@@ -7,7 +7,7 @@
             <p>people</p>
             <p>tags</p>
         </header>
-        <TaskPreview v-for="task in group.tasks" :task="task" />
+        <TaskPreview @update="updateTask" v-for="task in group.tasks" :task="task" />
         <AddTask :group="group" />
     </section>
 </template>
@@ -21,6 +21,11 @@ export default {
         group: {
             type: Object,
             required: true,
+        }
+    },
+    methods: {
+        updateTask(task) {
+            this.$store.dispatch({ type: 'updateTask', group: this.group, task })
         }
     },
     components: {

@@ -1,6 +1,6 @@
 <template>
-    <form @submit.prevent="addTask">
-        <input placeholder="+ Add Item">
+    <form class="frm-add-task" @submit.prevent="addTask">
+        <input v-model="task.title" placeholder="+ Add Item">
     </form>
 </template>
 
@@ -23,7 +23,6 @@ export default {
                 console.log(err)
                 throw new Error('method addTask failed')
             }
-            console.log('Task Added');
             this.task = boardService.getEmptyTask()
         }
     }
@@ -32,7 +31,7 @@ export default {
 
 <style lang="scss">
 
-form {
+.frm-add-task {
     height: 36px;
     // background-color: #ddd;
     border: 1px solid lightgrey;
