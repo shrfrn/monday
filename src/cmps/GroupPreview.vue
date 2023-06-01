@@ -1,6 +1,8 @@
 <template>
     <article class="group-preview">
-        <h2>{{ group.title }}</h2>
+        <form @submit.prevent="updateGroup">
+            <input v-model="miniGroup.title" ref="groupTitle"/>
+        </form>
         <TaskList :group="group" />    
     </article>    
 </template>
@@ -12,6 +14,20 @@ export default {
     props: {
         group: { type: Object, required: true }
     },
+    data() {
+        return {
+            miniGroup: {
+                id: this.group.id,
+                title: this.group.title,
+            }
+        }
+    },
+    methods: {
+        updateGroup() {
+            this.$emit('update', this.miniGroup)
+            this.$refs.groupTitle.blur()
+        },
+    },
     components: {
         TaskList,
     }
@@ -20,8 +36,11 @@ export default {
 
 <style lang="scss">
 .group-preview {
-    h2 {
+    & > form > input {
+        font-size: 22px;
+        border: none;
         margin-block-start: 50px;
+        margin-block-end: 10px;
     }
 }
 </style>

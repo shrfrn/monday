@@ -106,8 +106,17 @@ async function addGroup() {
 
 }
 
-async function updateGroup() {
+async function updateGroup(boardId, miniGroup) {
+    try {
+        const board = await getById(boardId)
+        const group = board.groups.find(group => group.id === miniGroup.id)
+        group.title = miniGroup.title
 
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.addTask() failed...')
+    }
 }
 
 async function removeGroup() {

@@ -24,6 +24,15 @@ const store = createStore({
                 throw new Error('action loadBoard failed')
             }
         },
+        async updateGroup({ state, commit }, { miniGroup }) {
+            try {
+                const board = await boardService.updateGroup(state.board._id, miniGroup)
+                commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action updateGroup failed')
+            }
+        },
         async addTask({ state, commit }, { group, task }) {
             try {
                 const board = await boardService.addTask(state.board._id, group.id, task)
