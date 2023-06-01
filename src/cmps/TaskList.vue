@@ -7,25 +7,25 @@
             <p>people</p>
             <p>tags</p>
         </header>
-        <TaskPreview v-for="task in tasks" :task="task" />
-        <footer>
-            <input placeholder="+ Add Item">
-        </footer>
+        <TaskPreview v-for="task in group.tasks" :task="task" />
+        <AddTask :group="group" />
     </section>
 </template>
 
 <script>
 import TaskPreview from '@/cmps/TaskPreview.vue'
+import AddTask from '@/cmps/AddTask.vue'
 
 export default {
     props: {
-        tasks: {
-            type: Array,
+        group: {
+            type: Object,
             required: true,
         }
     },
     components: {
         TaskPreview,
+        AddTask,
     }
 }
 </script>
@@ -39,28 +39,6 @@ export default {
 
     header, article {
         display: contents;
-    }
-
-    footer {
-        height: 36px;
-        // background-color: #ddd;
-        border: 1px solid lightgrey;
-        grid-column: 1 / -1;
-
-        input {
-            width: 200px;
-            height: 24px;
-            margin: 6px 8px;
-            border: none;
-            border-radius: 5px;
-            
-            &:hover {
-                outline: 1px solid lightgrey;
-            }
-            &:focus {
-                outline: 1px solid rgb(150, 172, 195);
-            }
-        }
     }
 }
 

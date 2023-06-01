@@ -1,4 +1,7 @@
+import { utilService } from "./util.service.js"
+import { userService } from "./user.service.js"
 import { storageService } from "./async-storage.service.js"
+
 const key = 'board'
 
 export const boardService = {
@@ -11,10 +14,12 @@ export const boardService = {
     addGroup,
     updateGroup,
     removeGroup,
+    getEmptyGroup,
 
     addTask,
     updateTask,
     removeTask,
+    getEmptyTask,
 }
 
 async function query() {
@@ -86,29 +91,8 @@ function getEmptyBoard() {
                 "id": utilService.makeId(),
                 "title": "Group 1",
                 "tasks": [
-                    {
-                        "id": utilService.makeId(),
-                        "title": "Item 1",
-                        "description": "description 1",
-                        owner:{},
-                        "status": '',
-                        'date': 0,
-                        people: [],
-                        tags: [],
-                        "comments": [],
-                        style: {},
-                    },
-                    {
-                        "id": utilService.makeId(),
-                        "title": "Help me",
-                        "description": "help soon",
-                        owner: {},
-                        "status": '',
-                        people: [],
-                        tags: [],
-                        "comments": [],
-                        style: {},
-                    }
+                    getEmptyTask(),
+                    getEmptyTask(),
                 ],
                 "style": {}
             }
@@ -130,8 +114,21 @@ async function removeGroup() {
 
 }
 
-async function addTask() {
+function getEmptyGroup() {
 
+}
+
+async function addTask(boardId, groupId, task) {
+    try {
+        console.log('task: ', task)
+        const board = await getById(boardId)
+        const group = board.groups.find(group => group.id === groupId)
+        group.tasks.unshift(task)
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.addTask() failed...')
+    }
 }
 
 async function updateTask() {
@@ -140,4 +137,19 @@ async function updateTask() {
 
 async function removeTask() {
 
+}
+
+function getEmptyTask() {
+    return                     {
+        "id": utilService.makeId(),
+        "title": "Item 1",
+        "description": "description 1",
+        owner: userService.getLoggedinUser(),
+        "status": '',
+        'date': 0,
+        people: [],
+        tags: [],
+        "comments": [],
+        style: {},
+    }
 }

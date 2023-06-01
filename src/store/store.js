@@ -23,6 +23,15 @@ const store = createStore({
                 console.log(err);
                 throw new Error('action loadBoard failed')
             }
+        },
+        async addTask({ state, commit }, { group, task }) {
+            try {
+                const board = await boardService.addTask(state.board._id, group.id, task)
+                // commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action addTask failed')
+            }
         }
     },
     getters: {

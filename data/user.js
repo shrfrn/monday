@@ -10,7 +10,7 @@ const users = [
             {
                 //optional
                 id: 'm101',
-                boardId: 'b,101',
+                boardId: 'b101',
                 taskId: 't101',
             },
         ],
@@ -24,9 +24,8 @@ const users = [
 
         mentions: [
             {
-                //optional
-                id: 'm101',
-                boardId: 'b,101',
+                id: 'm102',
+                boardId: 'b101',
                 taskId: 't101',
             },
         ],
@@ -40,9 +39,8 @@ const users = [
 
         mentions: [
             {
-                //optional
-                id: 'm101',
-                boardId: 'b,101',
+                id: 'm103',
+                boardId: 'b101',
                 taskId: 't101',
             },
         ],
@@ -56,9 +54,8 @@ const users = [
 
         mentions: [
             {
-                //optional
-                id: 'm101',
-                boardId: 'b,101',
+                id: 'm104',
+                boardId: 'b101',
                 taskId: 't101',
             },
         ],

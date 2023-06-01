@@ -1,7 +1,7 @@
 <template>
     <article class="group-preview">
         <h2>{{ group.title }}</h2>
-        <TaskList :tasks="group.tasks" />    
+        <TaskList :group="group" />    
     </article>    
 </template>
 

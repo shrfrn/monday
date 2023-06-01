@@ -3,7 +3,7 @@
         <p>{{ task.title }}</p>
         <p>{{ task.owner.fullname }}</p>
         <p>{{ task.status }}</p>
-        <p>{{ task.people[0].fullname }}</p>
+        <p>{{ task.people[0]?.fullname }}</p>
         <p>{{ task.tags }}</p>
     </article>
 </template>
