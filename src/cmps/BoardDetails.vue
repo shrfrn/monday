@@ -1,5 +1,6 @@
 <template>
     <section class="board-details">
+        <BoardHeader />
         <h1>{{ board.title }}</h1>
         <button @click="addGroup" class="btn-add-group">Add Group</button>
         <GroupList 
@@ -10,6 +11,7 @@
 </template>
 
 <script>
+import BoardHeader from '@/cmps/BoardHeader.vue'
 import GroupList from '@/cmps/GroupList.vue'
 
 export default {
@@ -28,11 +30,14 @@ export default {
         },
     },
     components: {
+        BoardHeader,
         GroupList,
     }
 }
 </script>
 
 <style lang="scss">
-
+.board-details {
+    grid-area: main-content;
+}
 </style>

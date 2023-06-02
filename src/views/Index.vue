@@ -1,8 +1,14 @@
 <template>
-    <BoardDetails v-if="board" :board="board" />
+    <div class="main-layout">
+        <MainNav />
+        <BoardList />
+        <BoardDetails v-if="board" :board="board" />
+    </div>
 </template>
 
 <script>
+import MainNav from '@/cmps/MainNav.vue'
+import BoardList from '@/cmps/BoardList.vue'
 import BoardDetails from '@/cmps/BoardDetails.vue'
 export default {
     async created() {
@@ -13,6 +19,8 @@ export default {
         board() { return this.$store.getters.board }
     },
     components: {
+        MainNav,
+        BoardList,
         BoardDetails,
     }
 }
@@ -20,4 +28,9 @@ export default {
 
 <style lang="scss">
 
+.main-layout{
+    display: grid;
+    grid-template-columns: 1fr 4fr 1000px;
+    grid-template-areas: "main-nav board-list main-content";
+}
 </style>
