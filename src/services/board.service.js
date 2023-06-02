@@ -1,6 +1,6 @@
-import { utilService } from "./util.service.js"
-import { userService } from "./user.service.js"
-import { storageService } from "./async-storage.service.js"
+import { utilService } from './util.service.js'
+import { userService } from './user.service.js'
+import { storageService } from './async-storage.service.js'
 
 const key = 'board'
 
@@ -64,37 +64,37 @@ async function remove(boardId) {
 
 function getEmptyBoard() {
     return {
-        _id: "b101",
-        title: "Robot dev proj",
+        _id: 'b101',
+        title: 'Robot dev proj',
         isStarred: false,
         createdBy: {},
         labels: [
             {
-                "id": "l101",
-                "title": "Done",
-                "color": "#61bd4f"
+                id: 'l101',
+                title: 'Done',
+                color: '#61bd4f'
             },
             {
-                "id": "l102",
-                "title": "Progress",
-                "color": "#61bd33"
+                id: 'l102',
+                title: 'Progress',
+                color: '#61bd33'
             },
             {
-                "id": "l103",
-                "title": "Stuck",
-                "color": "#dd1111"
+                id: 'l103',
+                title: 'Stuck',
+                color: '#dd1111'
             },
         ],
         members: [],
         groups: [
             {
-                "id": utilService.makeId(),
-                "title": "Group 1",
-                "tasks": [
+                id: utilService.makeId(),
+                title: 'Group 1',
+                tasks: [
                     getEmptyTask(),
                     getEmptyTask(),
                 ],
-                "style": {}
+                style: {}
             }
         ],
         activities: [],
@@ -102,36 +102,91 @@ function getEmptyBoard() {
     }
 }
 
-async function addGroup() {
-
+async function addGroup(boardId) {
+    try {
+        const group = getEmptyGroup()
+        const board = await getById(boardId)
+    
+        board.groups.unshift(group)
+        return save(board)
+    } catch (err) {
+        console.log(err);
+        throw('boardService.addGroup() failed...')
+    }
 }
 
 async function updateGroup(boardId, miniGroup) {
     try {
         const board = await getById(boardId)
         const group = board.groups.find(group => group.id === miniGroup.id)
-        group.title = miniGroup.title
 
+        group.title = miniGroup.title
         return save(board)
     } catch(err){
         console.log(err);
-        throw('boardService.addTask() failed...')
+        throw('boardService.updateGroup() failed...')
     }
 }
 
-async function removeGroup() {
-
+async function removeGroup(boardId, groupId) {
+    try {
+        const board = await getById(boardId)
+        const idx = board.groups.findIndex(group => group.id === groupId)
+        
+        board.groups.splice(idx, 1)
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.removeGroup() failed...')
+    }
 }
 
 function getEmptyGroup() {
-
+    return {
+        id: utilService.makeId(),
+        title: 'New Group',
+        tasks: [
+            {
+                id: utilService.makeId(),
+                title: 'New Task',
+                description: 'have fun',
+                owner: 
+                {
+                    _id: 'u104',
+                    fullname: 'Speedy Toto',
+                    imgUrl: 'http://some-img.jpg',
+                },
+                status: 'l101',
+                'date': Date.now(),
+                people: [],
+                tags: ['front', 'css', 'new'],
+                comments: [
+                    {
+                        id: utilService.makeId(),
+                        txt: 'please copy this',
+                        createdAt: Date.now(),
+                        by: {
+                            _id: 'u102',
+                            fullname: 'Miki Gogo',
+                            imgUrl: 'http://some-img.jpg',
+                        },
+                    },
+                ],
+                style: {},
+            },
+        ],
+        style: {
+            color: '#674523',
+        }
+    }
 }
 
 async function addTask(boardId, groupId, task) {
     try {
         const board = await getById(boardId)
         const group = board.groups.find(group => group.id === groupId)
-        group.tasks.push(task) // TODO: unshift doesn't work... why?
+        
+        group.tasks.unshift(task)
         return save(board)
     } catch(err){
         console.log(err);
@@ -149,7 +204,7 @@ async function updateTask(boardId, groupId, updatedTask) {
         return save(board)
     } catch(err){
         console.log(err);
-        throw('boardService.addTask() failed...')
+        throw('boardService.updateTask() failed...')
     }
 }
 
@@ -163,21 +218,21 @@ async function removeTask(boardId, groupId, taskId) {
         return save(board)
     } catch(err){
         console.log(err);
-        throw('boardService.addTask() failed...')
+        throw('boardService.removeTask() failed...')
     }
 }
 
 function getEmptyTask() {
     return                     {
-        "id": utilService.makeId(),
-        "title": "",
-        "description": "description 1",
+        id: utilService.makeId(),
+        title: '',
+        description: 'description 1',
         owner: userService.getLoggedinUser(),
-        "status": '',
+        status: '',
         'date': 0,
         people: [],
         tags: [],
-        "comments": [],
+        comments: [],
         style: {},
     }
 }

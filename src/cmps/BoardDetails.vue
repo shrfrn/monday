@@ -1,7 +1,11 @@
 <template>
     <section class="board-details">
         <h1>{{ board.title }}</h1>
-        <GroupList :groups="board.groups" @update="updateGroup" />
+        <button @click="addGroup" class="btn-add-group">Add Group</button>
+        <GroupList 
+            :groups="board.groups" 
+            @remove="removeGroup"
+            @update="updateGroup" />
     </section>
 </template>
 
@@ -13,8 +17,14 @@ export default {
         board: { type: Object, required: true }
     },
     methods: {
+        addGroup() {
+            this.$store.dispatch({ type: 'addGroup' })
+        },
         updateGroup(miniGroup) {
             this.$store.dispatch({ type: 'updateGroup', miniGroup })
+        },
+        removeGroup(groupId) {
+            this.$store.dispatch({ type: 'removeGroup', groupId })
         },
     },
     components: {

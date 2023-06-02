@@ -1,7 +1,10 @@
 <template>
     <section class="group-list">
-        <article v-for="group in groups" class="group-preview">
-            <GroupPreview :group="group" @update="updateGroup" />
+        <article v-for="group in groups" :key="group.id" class="group-preview">
+            <GroupPreview 
+                :group="group" 
+                @remove="removeGroup"
+                @update="updateGroup" />
         </article>
     </section>
 </template>
@@ -16,7 +19,10 @@ export default {
     methods: {
         updateGroup(miniGroup) {
             this.$emit('update', miniGroup)
-        }
+        },
+        removeGroup(groupId) {
+            this.$emit('remove', groupId)
+        },
     },
     components: {
         GroupPreview,

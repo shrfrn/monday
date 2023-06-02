@@ -2,6 +2,7 @@
     <article class="group-preview">
         <form @submit.prevent="updateGroup">
             <input v-model="miniGroup.title" ref="groupTitle"/>
+            <button @click="removeGroup" type="button" >x</button>
         </form>
         <TaskList :group="group" />    
     </article>    
@@ -26,6 +27,9 @@ export default {
         updateGroup() {
             this.$emit('update', this.miniGroup)
             this.$refs.groupTitle.blur()
+        },
+        removeGroup() {
+            this.$emit('remove', this.miniGroup.id)
         },
     },
     components: {

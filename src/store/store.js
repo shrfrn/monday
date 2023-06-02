@@ -24,6 +24,17 @@ const store = createStore({
                 throw new Error('action loadBoard failed')
             }
         },
+
+        async addGroup({ state, commit }) {
+            try {
+                const board = await boardService.addGroup(state.board._id)
+                commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action addGroup failed')
+            }
+        },
+
         async updateGroup({ state, commit }, { miniGroup }) {
             try {
                 const board = await boardService.updateGroup(state.board._id, miniGroup)
@@ -33,6 +44,17 @@ const store = createStore({
                 throw new Error('action updateGroup failed')
             }
         },
+
+        async removeGroup({ state, commit }, { groupId }) {
+            try {
+                const board = await boardService.removeGroup(state.board._id, groupId)
+                commit({ type: 'setActiveBoard', board })
+            } catch (err) {
+                console.log(err);
+                throw new Error('action removeGroup failed')
+            }
+        },
+
         async addTask({ state, commit }, { group, task }) {
             try {
                 const board = await boardService.addTask(state.board._id, group.id, task)
@@ -42,6 +64,7 @@ const store = createStore({
                 throw new Error('action addTask failed')
             }
         },
+
         async updateTask({ state, commit }, { group, task }) {
             try {
                 const board = await boardService.updateTask(state.board._id, group.id, task)
@@ -51,6 +74,7 @@ const store = createStore({
                 throw new Error('action updateTask failed')
             }
         },
+        
         async removeTask({ state, commit }, { group, task }) {
             try {
                 const board = await boardService.removeTask(state.board._id, group.id, task.id)
