@@ -19,6 +19,7 @@ export const boardService = {
     addTask,
     updateTask,
     removeTask,
+    moveTask,
     getEmptyTask,
 }
 
@@ -219,6 +220,32 @@ async function removeTask(boardId, groupId, taskId) {
     } catch(err){
         console.log(err);
         throw('boardService.removeTask() failed...')
+    }
+}
+
+async function moveTask(boardId, taskId, fromGroupId, toTaskId, toGroupId) {
+    try {
+        const board = await getById(boardId)
+
+        const fromGroup = board.groups.find(group => group.id === fromGroupId)
+        let toGroup = null
+        
+        if(fromGroupId === toGroupId) {
+            toGroup = fromGroup
+        } else {
+            toGroup = board.groups.find(group => group.id === toGroupId)
+        }
+        
+        const fromIdx = fromGroup.tasks.findIndex(task => task.id === taskId)
+        const toIdx = toGroup.tasks.findIndex(task => task.id === toTaskId)
+
+        const task = fromGroup.tasks.splice(fromIdx, 1)[0]
+        toGroup.tasks.splice(toIdx, 0, task)
+
+        return save(board)
+    } catch(err){
+        console.log(err);
+        throw('boardService.moveTask() failed...')
     }
 }
 
