@@ -39,5 +39,6 @@ export default {
 <style lang="scss">
 .board-details {
     grid-area: main-content;
+    overflow: scroll;
 }
 </style>

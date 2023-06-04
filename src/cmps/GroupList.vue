@@ -31,5 +31,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.group-list{
+    padding-inline-start: 42px;
+}
 </style>

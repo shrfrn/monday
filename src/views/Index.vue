@@ -32,5 +32,8 @@ export default {
     display: grid;
     grid-template-columns: 1fr 4fr 1000px;
     grid-template-areas: "main-nav board-list main-content";
+
+    height: 100vh;
+    overflow: hidden;
 }
 </style>
